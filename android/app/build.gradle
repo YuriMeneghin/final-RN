@@ -86,9 +86,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.anonymous.StickerSmash'
+    namespace 'com.anonymous.itsitc'
     defaultConfig {
-        applicationId 'com.anonymous.StickerSmash'
+        applicationId 'com.anonymous.itsitc'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
