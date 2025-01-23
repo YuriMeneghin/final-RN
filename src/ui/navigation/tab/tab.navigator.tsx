@@ -4,7 +4,7 @@ import { TabParams, Screen } from '../types';
 import HomeScreen from '../../screens/home/home.screen';
 import SettingsScreen from '../../screens/settings/settings.screen';
 import { Ionicons } from '@expo/vector-icons';
-import FavoritesScreen from '../../screens/notifications/favoritesScreen';
+import FavoritesScreen from '../../screens/favorites/favoritesScreen';
 
 const Tab = createBottomTabNavigator<TabParams>();
 export default function TabNavigator() {

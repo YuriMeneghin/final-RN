@@ -13,11 +13,15 @@ interface Props {
   navigation: NativeStackNavigationProp<MainParamList, Screen.Home>;
 }
 
-enum SortType {
-  initial = 'initial',
-  rating_asc = 'rating_asc',
-  rating_desc = 'rating_desc',
-}
+type SortType = 'initial' | 'rating_asc' | 'rating_desc' | 'price_asc' | 'price_desc';
+
+const SortType = {
+  initial: 'initial' as SortType,
+  rating_asc: 'rating_asc' as SortType,
+  rating_desc: 'rating_desc' as SortType,
+  price_asc: 'price_asc' as SortType,
+  price_desc: 'price_desc' as SortType,
+};
 
 const HomeScreen = ({ navigation }: Props) => {
   const {
@@ -34,23 +38,31 @@ const HomeScreen = ({ navigation }: Props) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortType, setSortType] = useState<SortType>(SortType.initial);
 
-  // ** USE CALLBACK ** //
+  // Callback per gestire il cambio di ordinamento
   const onSortChange = useCallback(
     (type: SortType) => {
       setSortType(type);
-      filterProducts(selectedCategory, type === SortType.initial ? null : type);
+      let sortValue: "rating_asc" | "rating_desc" | null = null;
+      if (type === SortType.rating_asc) sortValue = "rating_asc";
+      if (type === SortType.rating_desc) sortValue = "rating_desc";
+      filterProducts(selectedCategory, sortValue);
     },
     [selectedCategory, filterProducts]
   );
 
+  // Callback per gestire il cambio di categoria
   const onCategoryChange = useCallback(
     (category: string | null) => {
       setSelectedCategory(category);
-      filterProducts(category, sortType === SortType.initial ? null : sortType);
+      let sortValue: "rating_asc" | "rating_desc" | null = null;
+      if (sortType === SortType.rating_asc) sortValue = "rating_asc";
+      if (sortType === SortType.rating_desc) sortValue = "rating_desc";
+      filterProducts(category, sortValue);
     },
     [sortType, filterProducts]
   );
 
+  // Render dei filtri con picker di categoria e bottoni di ordinamento
   const renderFilters = useCallback(() => {
     return (
       <View style={styles.filtersContainer}>
@@ -71,6 +83,7 @@ const HomeScreen = ({ navigation }: Props) => {
         </View>
 
         <View style={styles.sortButtons}>
+          {/* Bottoni per ordinamento per rating */}
           <Button onPress={() => onSortChange(SortType.rating_desc)}>
             <Ionicons
               name={'star'}
@@ -85,6 +98,24 @@ const HomeScreen = ({ navigation }: Props) => {
               color={sortType === SortType.rating_asc ? 'green' : '#ffffff'}
             />
           </Button>
+
+          {/* Bottoni per ordinamento per prezzo */}
+          <Button onPress={() => onSortChange(SortType.price_desc)}>
+            <Ionicons
+              name={'arrow-up'}
+              size={24}
+              color={sortType === SortType.price_desc ? 'green' : '#ffffff'}
+            />
+          </Button>
+          <Button onPress={() => onSortChange(SortType.price_asc)}>
+            <Ionicons
+              name={'arrow-down'}
+              size={24}
+              color={sortType === SortType.price_asc ? 'green' : '#ffffff'}
+            />
+          </Button>
+
+          {/* Bottone per ripristinare l'ordinamento iniziale */}
           <Button
             onPress={() => onSortChange(SortType.initial)}
             disabled={sortType === SortType.initial}>
@@ -99,8 +130,9 @@ const HomeScreen = ({ navigation }: Props) => {
     );
   }, [categories, selectedCategory, sortType, onCategoryChange, onSortChange]);
 
+  // Render del singolo item della lista
   const renderItem = useCallback(
-    ({ item }) => (
+    ({ item }: { item: any }) => (
       <ProductCard
         product={item}
         isFavorite={favoriteIds.includes(item.id)}
@@ -111,14 +143,21 @@ const HomeScreen = ({ navigation }: Props) => {
             productsIds: products.map((p) => p.id),
           });
         }}
+        title={''} 
+        subTitle={''} 
+        description={''} 
+        image={{ uri: '' }} 
+        backgroundColor={''} 
+        bottomContent={undefined}
       />
     ),
     [favoriteIds, products, navigation, toggleFavorite]
   );
 
+  // Componente separatore tra gli item
   const ItemSeparatorComponent = useCallback(() => <View style={styles.itemSeparator} />, []);
 
-  // ** USE EFFECT ** //
+  // Effect per aggiornare i prodotti quando la schermata riceve focus
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       refreshProducts();

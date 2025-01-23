@@ -1,13 +1,20 @@
-import { FlatList, ListRenderItem, View, Text } from 'react-native';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { 
+  FlatList, 
+  ListRenderItem, 
+  View, 
+  Text, 
+  Image, 
+  ScrollView, 
+  TouchableOpacity 
+} from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { MainParamList, Screen } from '../../navigation/types';
 import { RouteProp } from '@react-navigation/native';
-import { ProductCard } from '../../atoms/genericCard/productCard.atom';
-import { styles } from './detail.styles';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import Button from '../../atoms/button/button.atom';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useProducts } from '../hook/useProduct.facade';
+import { styles } from './detail.styles';
 
 interface Product {
   id: number;
@@ -29,110 +36,131 @@ interface Props {
 
 const DetailScreen = ({ navigation, route }: Props) => {
   const { top, bottom } = useSafeAreaInsets();
-  const { id, idsArray } = route.params;
-  const [product, setProduct] = useState<Product | null>(null);
-
-  const currentIndex = useMemo(() => idsArray.indexOf(id), [id, idsArray]);
+  const { product, productsIds } = route.params;
+  const { toggleFavorite, favoriteIds } = useProducts();
+  
+  const currentIndex = useMemo(() => 
+    productsIds.indexOf(product.id), 
+    [product.id, productsIds]
+  );
 
   const backIconColor = useMemo(
     () => (currentIndex > 0 ? '#616b79' : '#cccccc'),
     [currentIndex]
   );
   const forwardIconColor = useMemo(
-    () => (currentIndex < idsArray.length - 1 ? '#616b79' : '#cccccc'),
-    [currentIndex, idsArray.length]
+    () => (currentIndex < productsIds.length - 1 ? '#616b79' : '#cccccc'),
+    [currentIndex, productsIds.length]
   );
 
-  // ** CALLBACKS ** //
   const handleBack = useCallback(() => {
-    const nextId = idsArray[currentIndex - 1];
-    if (!nextId) {
-      return;
+    const prevId = productsIds[currentIndex - 1];
+    if (prevId) {
+      navigation.setParams({ 
+        product: {
+          id: prevId,
+          title: '',
+          price: 0,
+          description: '',
+          category: '',
+          image: '',
+          rating: {
+            rate: 0,
+            count: 0
+          }
+        }, 
+        productsIds 
+      });
     }
-    navigation.setParams({ id: nextId });
-  }, [currentIndex, idsArray, navigation]);
+  }, [currentIndex, productsIds, navigation]);
 
   const handleNext = useCallback(() => {
-    const nextId = idsArray[currentIndex + 1];
-    if (!nextId) {
-      return;
+    const nextId = productsIds[currentIndex + 1];
+    if (nextId) {
+      navigation.setParams({ 
+        product: {
+          id: nextId,
+          title: '',
+          price: 0,
+          description: '',
+          category: '',
+          image: '',
+          rating: {
+            rate: 0,
+            count: 0
+          }
+        }, 
+        productsIds 
+      });
     }
-    navigation.setParams({ id: nextId });
-  }, [currentIndex, idsArray, navigation]);
+  }, [currentIndex, productsIds, navigation]);
 
-  // ** USE EFFECTS ** //
-  useEffect(() => {
-    fetch('https://fakestoreapi.com/products/' + id)
-      .then((res) => res.json())
-      .then(setProduct);
-  }, [id]);
-
-  // ** UI **//
-  const renderDetailItem = useCallback<ListRenderItem<Product>>(
-    ({ item }) => {
-      return (
-        <View style={styles.detailItem}>
-          <View style={styles.productContainer}>
-            <ProductCard
-              title={item.title}
-              subTitle={`$${item.price}`}
-              description={item.description}
-              image={{ uri: item.image }}
-              backgroundColor={'#2e67bd'}
-              bottomContent={
-                <View>
-                  <View style={styles.ratingContainer}>
-                    <Ionicons name="star" size={16} color="#ffd700" />
-                    <Text style={styles.ratingText}>
-                      {item.rating.rate} ({item.rating.count} reviews)
-                    </Text>
-                  </View>
-                  <Text style={styles.categoryText}>
-                    Category: {item.category}
-                  </Text>
-                </View>
-              }
-              product={item}
-              isFavorite={false}
-            />
-          </View>
-        </View>
-      );
-    },
-    []
-  );
-
-  const ItemSeparatorComponent = useCallback(
-    () => <View style={styles.itemSeparator}></View>,
-    []
-  );
+  const handleFavorite = useCallback(() => {
+    toggleFavorite(product);
+  }, [product, toggleFavorite]);
 
   return (
-    <View style={[styles.container, { marginTop: top, marginBottom: bottom }]}>
+    <ScrollView 
+      style={[styles.container, { marginTop: top, marginBottom: bottom }]}
+      contentContainerStyle={styles.scrollContainer}
+    >
       <View style={styles.navigatorContainer}>
         <Ionicons
           name={'chevron-back-circle'}
-          size={24}
+          size={36}
           onPress={handleBack}
           color={backIconColor}
         />
+        <TouchableOpacity onPress={handleFavorite}>
+          <Ionicons
+            name={favoriteIds.includes(product.id) ? 'heart' : 'heart-outline'}
+            size={36}
+            color={favoriteIds.includes(product.id) ? 'red' : '#616b79'}
+          />
+        </TouchableOpacity>
         <Ionicons
           name={'chevron-forward-circle'}
-          size={24}
+          size={36}
           onPress={handleNext}
           color={forwardIconColor}
         />
       </View>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={product ? [product] : []}
-        renderItem={renderDetailItem}
-        ItemSeparatorComponent={ItemSeparatorComponent}
-      />
-      <Button title={'Torna indietro'} onPress={navigation.goBack}>
-        <Text>Torna indietro</Text>
-      </Button>
-    </View>
+
+      <View style={styles.detailItem}>
+        <Image 
+          source={{ uri: product.image }} 
+          style={styles.productImage} 
+          resizeMode="contain"
+        />
+        
+        <View style={styles.productDetails}>
+          <Text style={styles.titleText}>{product.title}</Text>
+          <Text style={styles.priceText}>${product.price.toFixed(2)}</Text>
+          
+          <View style={styles.ratingContainer}>
+            <Ionicons name="star" size={16} color="#ffd700" />
+            <Text style={styles.ratingText}>
+              {product.rating.rate}/5 ({product.rating.count} reviews)
+            </Text>
+          </View>
+          
+          <Text style={styles.categoryText}>
+            Category: {product.category}
+          </Text>
+          
+          <Text style={styles.descriptionText}>
+            {product.description}
+          </Text>
+        </View>
+      </View>
+
+      <TouchableOpacity 
+        style={styles.backButton} 
+        onPress={() => navigation.goBack()}
+      >
+        <Text style={styles.backButtonText}>Back to List</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
 

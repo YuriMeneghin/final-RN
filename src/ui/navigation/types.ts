@@ -6,20 +6,24 @@ export enum Screen {
   Favorites = 'Favorites',
 }
 
-export type TabParams = {
-  [Screen.Home]: {
-    hasFavoritesUpdated: boolean;
-  };
-  [Screen.Settings]: undefined;
-  [Screen.Favorites]: {
-    hasFavoritesUpdated: boolean;
-  };
-};
+export interface Product {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  rating: {
+    rate: number;
+    count: number;
+  }
+}
 
 export type MainParamList = {
-  TabNavigator: undefined;
-  [Screen.Detail]: {
-    id: number;
-    idsArray: number[];
+  [Screen.Home]: undefined;
+  [Screen.Detail]: { 
+    product: Product; 
+    productsIds: number[];
   };
+  [Screen.Favorites]: undefined;
 };

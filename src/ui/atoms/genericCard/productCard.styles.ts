@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: '#1E1E1E', // Dark card background
     borderRadius: 12,
     marginHorizontal: 16,
     marginVertical: 8,
@@ -11,14 +11,14 @@ export const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.3,
     shadowRadius: 3.84,
     elevation: 5,
     overflow: 'hidden',
   },
   containerImage: {
     height: 200,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#272727', // Slightly lighter for image container
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -38,12 +38,12 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#333',
+    color: '#E0E0E0', // Soft white for titles
     marginBottom: 4,
   },
   description: {
     fontSize: 14,
-    color: '#666',
+    color: '#A0A0A0', // Light gray for description
     lineHeight: 20,
   },
   containerFooter: {
@@ -57,7 +57,7 @@ export const styles = StyleSheet.create({
   price: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#2E8B57',
+    color: '#4CAF50', // Maintained green for contrast
     marginBottom: 4,
   },
   ratingContainer: {
@@ -67,7 +67,7 @@ export const styles = StyleSheet.create({
   rating: {
     marginLeft: 4,
     fontSize: 14,
-    color: '#666',
+    color: '#A0A0A0',
   },
   favoriteButton: {
     padding: 4,
