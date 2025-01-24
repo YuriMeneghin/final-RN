@@ -57,18 +57,7 @@ const DetailScreen = ({ navigation, route }: Props) => {
     const prevId = productsIds[currentIndex - 1];
     if (prevId) {
       navigation.setParams({ 
-        product: {
-          id: prevId,
-          title: '',
-          price: 0,
-          description: '',
-          category: '',
-          image: '',
-          rating: {
-            rate: 0,
-            count: 0
-          }
-        }, 
+        product: { id: prevId }, 
         productsIds 
       });
     }
@@ -78,18 +67,7 @@ const DetailScreen = ({ navigation, route }: Props) => {
     const nextId = productsIds[currentIndex + 1];
     if (nextId) {
       navigation.setParams({ 
-        product: {
-          id: nextId,
-          title: '',
-          price: 0,
-          description: '',
-          category: '',
-          image: '',
-          rating: {
-            rate: 0,
-            count: 0
-          }
-        }, 
+        product: { id: nextId }, 
         productsIds 
       });
     }
@@ -105,25 +83,13 @@ const DetailScreen = ({ navigation, route }: Props) => {
       contentContainerStyle={styles.scrollContainer}
     >
       <View style={styles.navigatorContainer}>
-        <Ionicons
-          name={'chevron-back-circle'}
-          size={36}
-          onPress={handleBack}
-          color={backIconColor}
-        />
         <TouchableOpacity onPress={handleFavorite}>
           <Ionicons
             name={favoriteIds.includes(product.id) ? 'heart' : 'heart-outline'}
             size={36}
-            color={favoriteIds.includes(product.id) ? 'red' : '#616b79'}
+            color={favoriteIds.includes(product.id) ? '#FF1493' : '#616b79'}
           />
         </TouchableOpacity>
-        <Ionicons
-          name={'chevron-forward-circle'}
-          size={36}
-          onPress={handleNext}
-          color={forwardIconColor}
-        />
       </View>
 
       <View style={styles.detailItem}>

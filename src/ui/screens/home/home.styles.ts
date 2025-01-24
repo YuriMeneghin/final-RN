@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
-
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#121212', // Dark background
+    backgroundColor: '#000000', 
   },
   itemSeparator: {
     height: 16,
@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     marginBottom: 16,
   },
   categoryPicker: {
-    backgroundColor: '#1E1E1E', // Dark background for picker
+    backgroundColor: '#1E1E1E', 
     borderRadius: 8,
     marginBottom: 12,
     shadowColor: '#000',
@@ -25,15 +25,14 @@ export const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 3,
     borderWidth: 1,
-    borderColor: '#333333', // Subtle border for definition
+    borderColor: '#FF1493', 
   },
   picker: {
-    height: 50,
-    color: '#FFFFFF', // White text for picker
+    height: 55,
+    color: '#FFFFFF', 
   },
   sortButtons: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    gap: 8,
+    justifyContent: 'space-between',
   },
 });

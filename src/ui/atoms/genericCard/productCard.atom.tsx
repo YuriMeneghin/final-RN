@@ -5,7 +5,7 @@ import { styles } from './productCard.styles';
 
 interface Props {
   title: string;
-  subTitle: string; // Add this line
+  subTitle: string;
   description: string;
   image: { uri: string };
   backgroundColor: string;
@@ -85,7 +85,7 @@ export const ProductCard = ({ product, isFavorite, onPress, onFavoritePress }: P
               <Ionicons
                 name={isFavorite ? 'heart' : 'heart-outline'}
                 size={24}
-                color={isFavorite ? '#FF4444' : '#666'}
+                color={isFavorite ? '#FF1493' : '#666'}
               />
             </TouchableOpacity>
           )}

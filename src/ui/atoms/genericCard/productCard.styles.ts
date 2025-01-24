@@ -6,6 +6,8 @@ export const styles = StyleSheet.create({
     borderRadius: 12,
     marginHorizontal: 16,
     marginVertical: 8,
+    borderWidth: 1,
+    borderColor: '#FF1493',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

@@ -4,7 +4,7 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#121212', // Dark background
+    backgroundColor: '#000000', // Dark background
   },
   itemSeparator: {
     height: 16,

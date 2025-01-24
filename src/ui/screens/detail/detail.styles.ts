@@ -5,7 +5,7 @@ const { width } = Dimensions.get('window');
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#121212', // Dark background
+    backgroundColor: '#000000', // Dark background
   },
   scrollContainer: {
     paddingHorizontal: 16,
@@ -21,6 +21,8 @@ export const styles = StyleSheet.create({
     backgroundColor: '#1E1E1E', // Dark card background
     borderRadius: 12,
     shadowColor: '#000',
+    borderWidth: 1,
+    borderColor: '#FF1493',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
@@ -70,9 +72,11 @@ export const styles = StyleSheet.create({
     lineHeight: 24,
   },
   backButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#111111',
     padding: 15,
     borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#FF1493',
     alignItems: 'center',
   },
   backButtonText: {

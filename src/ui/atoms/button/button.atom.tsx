@@ -21,10 +21,12 @@ const Button = ({
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#112341',
+    borderWidth: 1,
+    borderColor: '#FF1493',
+    backgroundColor: '#111111',
     paddingVertical: 12,
     paddingHorizontal: 24,
-    borderRadius: 8,
+    borderRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 2,

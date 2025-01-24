@@ -4,6 +4,7 @@ import { TabParams, Screen } from '../types';
 import HomeScreen from '../../screens/home/home.screen';
 import { Ionicons } from '@expo/vector-icons';
 import FavoritesScreen from '../../screens/favorites/favoritesScreen';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const Tab = createBottomTabNavigator<TabParams>();
 
@@ -14,8 +15,9 @@ export default function TabNavigator() {
         return {
           headerShown: true,
           tabBarShowLabel: false,
-          headerStyle: {backgroundColor: "#A0A0A0"},
-          tabBarStyle: {backgroundColor: "#A0A0A0"},
+          headerTintColor: '#FFFFFF',
+          headerStyle: {backgroundColor: '#111111'},
+          tabBarStyle: {backgroundColor: '#111111'},
           tabBarIconStyle: {
             flex: 1,
             justifyContent: 'center',
@@ -31,7 +33,7 @@ export default function TabNavigator() {
               }
             };
              
-            return <Ionicons name={iconName()} size={24} color={focused ? '#4CAF50' : '#121212'} />;
+            return <Ionicons name={iconName()} size={24} color={focused ? '#FF1493' : '#FFFFFF'} />;
           },
         };
       }}

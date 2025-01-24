@@ -42,11 +42,9 @@ const HomeScreen = ({ navigation }: Props) => {
   const onSortChange = useCallback(
     (type: SortType) => {
       setSortType(type);
-      let sortValue: "rating_asc" | "rating_desc" | "price_asc" | "price_desc" | null = null;
+      let sortValue: "rating_asc" | "rating_desc" | null = null;
       if (type === SortType.rating_asc) sortValue = "rating_asc";
       if (type === SortType.rating_desc) sortValue = "rating_desc";
-      if (type === SortType.price_asc) sortValue = "price_asc";
-      if (type === SortType.price_desc) sortValue = "price_desc";
       filterProducts(selectedCategory, sortValue);
     },
     [selectedCategory, filterProducts]
@@ -56,11 +54,9 @@ const HomeScreen = ({ navigation }: Props) => {
   const onCategoryChange = useCallback(
     (category: string | null) => {
       setSelectedCategory(category);
-      let sortValue: "rating_asc" | "rating_desc" | "price_asc" | "price_desc" | null = null;
+      let sortValue: "rating_asc" | "rating_desc" | null = null;
       if (sortType === SortType.rating_asc) sortValue = "rating_asc";
       if (sortType === SortType.rating_desc) sortValue = "rating_desc";
-      if (sortType === SortType.price_asc) sortValue = "price_asc";
-      if (sortType === SortType.price_desc) sortValue = "price_desc";
       filterProducts(category, sortValue);
     },
     [sortType, filterProducts]
@@ -92,14 +88,14 @@ const HomeScreen = ({ navigation }: Props) => {
             <Ionicons
               name={'star'}
               size={24}
-              color={sortType === SortType.rating_desc ? 'green' : '#ffffff'}
+              color={sortType === SortType.rating_desc ? '#FF1493' : '#ffffff'}
             />
           </Button>
           <Button onPress={() => onSortChange(SortType.rating_asc)}>
             <Ionicons
               name={'star-outline'}
               size={24}
-              color={sortType === SortType.rating_asc ? 'green' : '#ffffff'}
+              color={sortType === SortType.rating_asc ? '#FF1493' : '#ffffff'}
             />
           </Button>
 
@@ -108,14 +104,14 @@ const HomeScreen = ({ navigation }: Props) => {
             <Ionicons
               name={'arrow-up'}
               size={24}
-              color={sortType === SortType.price_desc ? 'green' : '#ffffff'}
+              color={sortType === SortType.price_desc ? '#FF1493' : '#ffffff'}
             />
           </Button>
           <Button onPress={() => onSortChange(SortType.price_asc)}>
             <Ionicons
               name={'arrow-down'}
               size={24}
-              color={sortType === SortType.price_asc ? 'green' : '#ffffff'}
+              color={sortType === SortType.price_asc ? '#FF1493' : '#ffffff'}
             />
           </Button>
 
