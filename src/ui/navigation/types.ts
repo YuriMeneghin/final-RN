@@ -27,3 +27,11 @@ export type MainParamList = {
   };
   [Screen.Favorites]: undefined;
 };
+
+export type TabParams = {
+
+  [Screen.Home]: undefined;
+
+  [Screen.Favorites]: undefined;
+
+}

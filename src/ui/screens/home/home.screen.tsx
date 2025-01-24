@@ -42,9 +42,11 @@ const HomeScreen = ({ navigation }: Props) => {
   const onSortChange = useCallback(
     (type: SortType) => {
       setSortType(type);
-      let sortValue: "rating_asc" | "rating_desc" | null = null;
+      let sortValue: "rating_asc" | "rating_desc" | "price_asc" | "price_desc" | null = null;
       if (type === SortType.rating_asc) sortValue = "rating_asc";
       if (type === SortType.rating_desc) sortValue = "rating_desc";
+      if (type === SortType.price_asc) sortValue = "price_asc";
+      if (type === SortType.price_desc) sortValue = "price_desc";
       filterProducts(selectedCategory, sortValue);
     },
     [selectedCategory, filterProducts]
@@ -54,9 +56,11 @@ const HomeScreen = ({ navigation }: Props) => {
   const onCategoryChange = useCallback(
     (category: string | null) => {
       setSelectedCategory(category);
-      let sortValue: "rating_asc" | "rating_desc" | null = null;
+      let sortValue: "rating_asc" | "rating_desc" | "price_asc" | "price_desc" | null = null;
       if (sortType === SortType.rating_asc) sortValue = "rating_asc";
       if (sortType === SortType.rating_desc) sortValue = "rating_desc";
+      if (sortType === SortType.price_asc) sortValue = "price_asc";
+      if (sortType === SortType.price_desc) sortValue = "price_desc";
       filterProducts(category, sortValue);
     },
     [sortType, filterProducts]
@@ -132,7 +136,7 @@ const HomeScreen = ({ navigation }: Props) => {
 
   // Render del singolo item della lista
   const renderItem = useCallback(
-    ({ item }: { item: any }) => (
+    ({ item }) => (
       <ProductCard
         product={item}
         isFavorite={favoriteIds.includes(item.id)}

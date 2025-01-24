@@ -10,7 +10,7 @@ interface Rating {
 interface Product {
   id: number;
   title: string;
-  price: number;
+  price: Rating;
   description: string;
   category: string;
   image: string;
@@ -67,7 +67,7 @@ export const useProducts = () => {
   );
 
   const filterProducts = useCallback(
-    (category: string | null, sortBy: 'rating_asc' | 'rating_desc' | null) => {
+    (category: string | null, sortBy: 'rating_asc' | 'rating_desc' | 'price_asc' |'price_desc'| null) => {
       let filteredProducts = [...initialProducts];
 
       // Apply category filter
@@ -84,6 +84,16 @@ export const useProducts = () => {
             return a.rating.rate - b.rating.rate;
           }
           return b.rating.rate - a.rating.rate;
+        });
+      }
+
+      // Apply price sort
+      if (sortBy) {
+        filteredProducts.sort((a, b) => {
+          if (sortBy === 'price_asc') {
+            return a.price.rate - b.price.rate;
+          }
+          return b.price.rate - a.price.rate;
         });
       }
 
